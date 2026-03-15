@@ -11,7 +11,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
+//DD2SquireSonicBoom
 namespace BoneTest.Content.NPCs.Bosses
 {
     [AutoloadBossHead]

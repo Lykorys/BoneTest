@@ -12,7 +12,7 @@ using BoneTest.Content.Players;
 using Humanizer;
 namespace BoneTest.Content.Utils.Functions
 {
-    public class ReloadableGun : GlobalItem
+    public class WunderWeapons : GlobalItem
     {
         private PlayerPerks playerPerks;
         private int chargeTimer = 0;
@@ -20,8 +20,8 @@ namespace BoneTest.Content.Utils.Functions
         public int ammo = 0;
         public int maxAmmo;
         private int maxDefaultAmmo;
+        public int ammoReserve = 0;
         public bool isReloading = false;
-        public List<int> loadedBullets = new List<int>();
         public override bool InstancePerEntity => true;
         public bool IsReloadable = false;
         public SoundStyle? reloadSound;
@@ -38,7 +38,7 @@ namespace BoneTest.Content.Utils.Functions
         public override void SaveData(Item item, TagCompound tag) {
             if (IsReloadable) {
                 tag["ammo"] = ammo;
-                tag["bullets"] = loadedBullets;
+                tag["ammoReserve"] = ammoReserve;
             }
         }
 
@@ -46,8 +46,8 @@ namespace BoneTest.Content.Utils.Functions
             if (tag.ContainsKey("ammo")) {
                 ammo = tag.GetInt("ammo");
             }
-            if (tag.ContainsKey("bullets")) {
-                loadedBullets = (List<int>)tag.GetList<int>("bullets");
+            if (tag.ContainsKey("ammoReserve")) {
+                ammoReserve = tag.GetInt("ammoReserve");
             }
         }
         public override void HoldItem(Item item, Player player)
@@ -99,10 +99,12 @@ namespace BoneTest.Content.Utils.Functions
 
             return true;
         }
-        public void removeBullets()
+        public void removeBullets(int numberToRemove)
         {
-            loadedBullets.RemoveAt(0);
-            ammo--;
+            for(int _ = 0; _ < numberToRemove; _++)
+            {
+                ammo--;
+            }
         }
         public void playSound()
         {
@@ -123,37 +125,18 @@ namespace BoneTest.Content.Utils.Functions
             isReloading=true;
             int ammoToRemove = maxAmmo-ammo;
             shootSoundNumber=whenToPlaySound;
-            int slot = AmmoFinderSystem.GetFirstBulletSlot(player);
-            Item bullet = player.inventory[slot];
-            while (ammoToRemove != 0 && slot!=-1) 
+            while (ammoToRemove != 0 || ammoReserve!=0) 
             {
-                
-                if (bullet.stack == 0)
-                {
-                    bullet.TurnToAir();
-                    slot = AmmoFinderSystem.GetFirstBulletSlot(player);
-                    bullet = player.inventory[slot];
-                }
-                else
-                {
-                    ammoToRemove-=1;
-                    ammo++;
-                    loadedBullets.Insert(0,bullet.shoot);
-                    bullet.stack-=1;
-                }
+                ammoReserve--;
+                ammoToRemove--;
+                ammo++;
             }
         }
         public override void PostDrawInInventory(Item item,SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             if (!IsReloadable) return;
             Player player = Main.LocalPlayer;
-            int totalReserves = 0;
-            foreach (Item invItem in player.inventory) {
-                if (!invItem.IsAir && invItem.ammo == AmmoID.Bullet) {
-                    totalReserves += invItem.stack;
-                }
-            }
             string magText = $"{ammo}";
-            string reserveText = $"{totalReserves}";
+            string reserveText = $"{ammoReserve}";
             float textScale = scale * 1.1f; 
             float ratio = (float)ammo / maxAmmo;
             Color magColor = Color.Lerp(new Color(150, 0, 0), Color.White, ratio);

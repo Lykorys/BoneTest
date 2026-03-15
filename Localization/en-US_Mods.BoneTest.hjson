@@ -78,6 +78,36 @@ Items: {
 		DisplayName: Juggernog Item
 		Tooltip: ""
 	}
+
+	ElectricCherryItem: {
+		DisplayName: Electric Cherry Item
+		Tooltip: ""
+	}
+
+	DoubleTapItem: {
+		DisplayName: Double Tap Item
+		Tooltip: ""
+	}
+
+	MuleKick: {
+		DisplayName: Mule Kick
+		Tooltip: ""
+	}
+
+	QuickRevive: {
+		DisplayName: Quick Revive
+		Tooltip: ""
+	}
+
+	SpeedCola: {
+		DisplayName: Speed Cola
+		Tooltip: ""
+	}
+
+	StaminaUp: {
+		DisplayName: Stamina Up
+		Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -113,6 +143,7 @@ Projectiles: {
 	MithrixHammerProjAltUse.DisplayName: Mithrix Hammer Proj Alt Use
 	MithrixHammerProj.DisplayName: Mithrix Hammer Proj
 	PeaShooterProjectile.DisplayName: Pea Shooter Projectile
+	CherryLightning.DisplayName: Cherry Lightning
 }
 
 Configs: {

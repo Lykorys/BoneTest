@@ -1,33 +1,33 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using BoneTest.Content.Utils.Functions;
 using BoneTest.Content.Config;
-namespace BoneTest.Content.Items.Weapons
+using Steamworks;
+
+namespace BoneTest.Content.Items.Weapons.BO3.Pistols
 {
-    public class RK5 : ModItem{
-        SoundStyle shootSound = new SoundStyle("BoneTest/Content/Sound/Weapons/RK5burst") {
-            Volume = 0.8f,
-            Pitch = 0.1f,
-            MaxInstances = 9
-        };
-        SoundStyle reloadSound = new SoundStyle("BoneTest/Content/Sound/Weapons/RK5reload") {
+    public class Bloundhound : ModItem{
+        public override string Texture => "Terraria/Images/Item_"+ItemID.Revolver ;
+        SoundStyle shootSound = new SoundStyle("BoneTest/Content/Sound/Weapons/MR6shoot") {
             Volume = 0.8f,
             Pitch = 0.1f,
             MaxInstances = 3
         };
+        SoundStyle reloadSound = new SoundStyle("BoneTest/Content/Sound/Weapons/MR6reload") {
+            Volume = 0.8f,
+            Pitch = 0.1f,
+            MaxInstances = 3
+        };
+
         private ReloadableGun Gun => Item.GetGlobalItem<ReloadableGun>();
         public override void SetDefaults(){
 			Item.rare = ItemRarityID.Green; // The color that the item's name will be in-game.
-            Item.useTime = 3;           
-            Item.useAnimation = 9;      // Total burst duration (6 * 3)
-            Item.reuseDelay = 10;
+			Item.useTime = 1; // The item's use time in ticks (60 ticks == 1 second.)
+			Item.useAnimation = 1; // The length of the item's use animation in ticks (60 ticks == 1 second.)
 			Item.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
 			Item.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
 			Item.damage = 20; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
@@ -38,20 +38,20 @@ namespace BoneTest.Content.Items.Weapons
 			Item.useAmmo = AmmoID.None; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
             if (Item.TryGetGlobalItem(out ReloadableGun gun)) {
                 gun.IsReloadable=true;
-                gun.maxAmmo = 15;
+                gun.maxAmmo = 8;
                 gun.reloadTime = (int)(60 * 1.5);
                 gun.reloadSound = reloadSound;
-                gun.shootSound = shootSound;
+                gun.shootSound= shootSound;
                 gun.whenToPlaySound= Item.useAnimation/Item.useTime;
             }
         }
         public override void SetStaticDefaults() {
-            Terraria.Localization.Language.GetOrRegister("Mods.BoneTest.Items.RK5.DisplayName", () => "RK5");
+            Terraria.Localization.Language.GetOrRegister("Mods.BoneTest.Items.MR6.DisplayName", () => "MR6");
         }
-        
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
 		{
-           if (Gun.ammo > 0 && Gun.loadedBullets.Count > 0) {
+            if (Gun.loadedBullets.Count > 0) {
                 Projectile.NewProjectile(source, position, velocity, Gun.loadedBullets[0], damage, knockback, player.whoAmI);
                 Gun.playSound();
                 Gun.removeBullets();

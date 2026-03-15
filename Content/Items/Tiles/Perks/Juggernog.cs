@@ -20,7 +20,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(150, 50, 255)); 
-            AdjTiles = new int[] { TileID.DemonAltar };
+            AdjTiles = new int[] { TileID.Hellforge };
         }
 
         public override bool RightClick(int i, int j) {
@@ -28,7 +28,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
             int left = i - (tile.TileFrameX / 18);
             int top = j - (tile.TileFrameY / 18);
             Player player = Main.LocalPlayer;
-            PlayerTestMod modPlayer = player.GetModPlayer<PlayerTestMod>();
+            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
             if (!modPlayer.hasJug) {
                 modPlayer.hasJug = true;
                 Main.NewText("JugActive");

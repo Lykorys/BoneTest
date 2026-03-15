@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 using BoneTest.Content.Utils.Functions;
 using BoneTest.Content.Config;
 
-namespace BoneTest.Content.Items.Weapons
+namespace BoneTest.Content.Items.Weapons.BO3.Pistols
 {
-    public class MR6 : ModItem{
+    public class KN44 : ModItem{
         SoundStyle shootSound = new SoundStyle("BoneTest/Content/Sound/Weapons/MR6shoot") {
             Volume = 0.8f,
             Pitch = 0.1f,
@@ -24,8 +24,8 @@ namespace BoneTest.Content.Items.Weapons
         private ReloadableGun Gun => Item.GetGlobalItem<ReloadableGun>();
         public override void SetDefaults(){
 			Item.rare = ItemRarityID.Green; // The color that the item's name will be in-game.
-			Item.useTime = 8; // The item's use time in ticks (60 ticks == 1 second.)
-			Item.useAnimation = 8; // The length of the item's use animation in ticks (60 ticks == 1 second.)
+			Item.useTime = 1; // The item's use time in ticks (60 ticks == 1 second.)
+			Item.useAnimation = 1; // The length of the item's use animation in ticks (60 ticks == 1 second.)
 			Item.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
 			Item.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
 			Item.damage = 20; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
@@ -36,8 +36,8 @@ namespace BoneTest.Content.Items.Weapons
 			Item.useAmmo = AmmoID.None; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
             if (Item.TryGetGlobalItem(out ReloadableGun gun)) {
                 gun.IsReloadable=true;
-                gun.maxAmmo = 8;
-                gun.reloadTime = (int)(60 * 1.9);
+                gun.maxAmmo = 30;
+                gun.reloadTime = (int)(60 * 2);
                 gun.reloadSound = reloadSound;
                 gun.shootSound= shootSound;
                 gun.whenToPlaySound= Item.useAnimation/Item.useTime;
