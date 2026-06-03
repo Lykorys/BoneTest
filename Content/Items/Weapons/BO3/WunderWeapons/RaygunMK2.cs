@@ -41,8 +41,8 @@ namespace BoneTest.Content.Items.Weapons.BO3.WunderWeapons
 			Item.useAmmo = AmmoID.None; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
             if (Item.TryGetGlobalItem(out WunderWeapon gun)) {
                 gun.IsReloadable=true;
-                gun.ammo=150;
-                gun.maxAmmo = 3;
+                gun.ammo=15;
+                gun.magCapacity = 150;
                 gun.ammoReserve=15;
                 gun.reloadTime = (int)(60 * 2.98);
                 gun.reloadSound = reloadSound;
@@ -53,7 +53,6 @@ namespace BoneTest.Content.Items.Weapons.BO3.WunderWeapons
         public override void SetStaticDefaults() {
             Terraria.Localization.Language.GetOrRegister("Mods.BoneTest.Items.WunderWaffe.DisplayName", () => "Wunderwaffe DG-2");
         }
-
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
 		{
             if (Gun.ammo > 0) {

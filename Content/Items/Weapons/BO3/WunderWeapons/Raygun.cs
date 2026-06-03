@@ -38,9 +38,9 @@ namespace BoneTest.Content.Items.Weapons.BO3.WunderWeapons
             if (Item.TryGetGlobalItem(out WunderWeapon gun)) {
                 gun.IsReloadable=true;
                 gun.ammo=150;
-                gun.maxAmmo = 3;
+                gun.magCapacity = 3;
                 gun.ammoReserve=15;
-                gun.reloadTime = (int)(60 * 6);
+                gun.reloadTime = (int)(60 * 3);
                 gun.reloadSound = reloadSound;
                 gun.shootSound= shootSound;
                 gun.whenToPlaySound= Item.useAnimation/Item.useTime;

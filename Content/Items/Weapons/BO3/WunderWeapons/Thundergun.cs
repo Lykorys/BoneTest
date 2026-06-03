@@ -37,10 +37,10 @@ namespace BoneTest.Content.Items.Weapons.BO3.WunderWeapons
 			Item.useAmmo = AmmoID.None; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
             if (Item.TryGetGlobalItem(out WunderWeapon gun)) {
                 gun.IsReloadable=true;
-                gun.ammo=150;
-                gun.maxAmmo = 3;
-                gun.ammoReserve=15;
-                gun.reloadTime = (int)(60 * 6);
+                gun.ammo=15;
+                gun.magCapacity = 15;
+                gun.ammoReserve=150; 
+                gun.reloadTime = (int)(60 * 2);
                 gun.reloadSound = reloadSound;
                 gun.shootSound= shootSound;
                 gun.whenToPlaySound= Item.useAnimation/Item.useTime;

@@ -18,7 +18,7 @@ namespace BoneTest.Content.Utils.Functions
         private int chargeTimer = 0;
         public int reloadTime;
         public int ammo = 0;
-        public int maxAmmo;
+        public int magCapacity;
         private int maxDefaultAmmo;
         public int ammoReserve = 0;
         public bool isReloading = false;
@@ -33,7 +33,7 @@ namespace BoneTest.Content.Utils.Functions
         public override void SetDefaults(Item entity)
         {
             shootSoundNumber=whenToPlaySound;
-            maxDefaultAmmo=maxAmmo;
+            maxDefaultAmmo=magCapacity;
         }
         public override void SaveData(Item item, TagCompound tag) {
             if (IsReloadable) {
@@ -55,8 +55,8 @@ namespace BoneTest.Content.Utils.Functions
 
             if (KeybindSystem.Reload.JustPressed) {
                 playerPerks ??= player.GetModPlayer<PlayerPerks>();
-                if(maxAmmo==maxDefaultAmmo && playerPerks.hasMuleKick) maxAmmo= (int)(maxAmmo*playerPerks.magSizeMult);
-                if (!isReloading && ammo <maxAmmo) {
+                if(magCapacity==maxDefaultAmmo && playerPerks.hasMuleKick) magCapacity= (int)(magCapacity*playerPerks.magSizeMult);
+                if (!isReloading && ammo <magCapacity) {
                     reload(); 
                 }
             }
@@ -123,7 +123,7 @@ namespace BoneTest.Content.Utils.Functions
         {
             if (!IsReloadable) return;
             isReloading=true;
-            int ammoToRemove = maxAmmo-ammo;
+            int ammoToRemove = magCapacity-ammo;
             shootSoundNumber=whenToPlaySound;
             while (ammoToRemove > 0 && ammoReserve>0) 
             {
@@ -136,8 +136,8 @@ namespace BoneTest.Content.Utils.Functions
             if (!IsReloadable) return;
             string magText = $"{ammo}";
             string reserveText = $"{ammoReserve}";
-            float textScale = scale * 1.1f; 
-            float ratio = (float)ammo / maxAmmo;
+            float textScale = scale * 1.5f; 
+            float ratio = (float)ammo / magCapacity;
             Color magColor = Color.Lerp(new Color(150, 0, 0), Color.White, ratio);
             float slotWidth = 52f * scale;
             Vector2 slotTopLeft = position - (new Vector2(26f, 26f) * scale);
