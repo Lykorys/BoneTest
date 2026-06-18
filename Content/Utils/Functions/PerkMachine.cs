@@ -17,23 +17,44 @@ namespace BoneTest.Content.Utils.Functions
         {
             Player player = Main.LocalPlayer;
             PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (modPlayer.zombieMoney >= prices[priceIndex] && priceIndex<prices.Length)
+            if(priceIndex < prices.Length)
+            {
+                if (modPlayer.zombieMoney >= prices[priceIndex])
+                {
+                    if (modPlayer.HasPerk(perk.perkName))
+                    {
+                        modPlayer.ActivePerks[perk.perkName].tier++;
+                        modPlayer.zombieMoney-=prices[priceIndex];
+                        priceIndex++;
+                        Main.NewText(priceIndex,Color.Blue);
+                        
+                    }
+                    else
+                    {
+                        modPlayer.AddPerk(perk);
+                        modPlayer.zombieMoney-=prices[priceIndex];
+                        priceIndex=1;
+                        Main.NewText(priceIndex,Color.Black);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
+                    }
+                }
+            }
+            else
             {
                 if (!modPlayer.HasPerk(perk.perkName))
                 {
-                    modPlayer.AddPerk(perk);
-                    modPlayer.zombieMoney-=prices[priceIndex];
-                    priceIndex++;
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-                }
-                else
-                {
-                    modPlayer.ActivePerks[perk.perkName].tier++;
-                    modPlayer.zombieMoney-=prices[priceIndex];
-                    priceIndex++;
-                }
+                    priceIndex=0;
+                    if (modPlayer.zombieMoney >= prices[priceIndex])
+                    {
+                        modPlayer.AddPerk(perk);
+                        modPlayer.zombieMoney-=prices[priceIndex];
+                        priceIndex=1;
+                        Main.NewText(priceIndex,Color.Black);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
+                    }
+                } 
             }
-            Main.NewText(priceIndex);
+            Main.NewText(priceIndex,Color.Red);
             return true;
         }
     }

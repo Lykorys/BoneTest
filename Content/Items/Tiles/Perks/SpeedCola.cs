@@ -15,7 +15,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
 {
     public class SpeedColaTile : PerkMachine
     {
-        public override Perk perk => new ElectricCherryPerk();
+        public override Perk perk => new SpeedColaPerk();
         public override int[] prices => [500, 1500, 3000, 4500];
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
