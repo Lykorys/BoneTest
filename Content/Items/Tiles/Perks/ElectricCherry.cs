@@ -14,7 +14,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
     public class ElectricCherryTile : PerkMachine
     {
         public override string Texture => "Terraria/Images/Tiles_26"; 
-        public override Perk perk => new ElectricCherryPerk();
+        public override Perk perk => new ElectricCherry();
         public override int[] prices => [500, 1500, 3000, 4500];
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;

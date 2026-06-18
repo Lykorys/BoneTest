@@ -11,7 +11,7 @@ namespace BoneTest.Content.Players
         public abstract Texture2D perkLogo {get;}
         public abstract void ApplyEffect(PlayerPerks playerPerks);
     }
-    public class DoubleTapPerk : Perk
+    public class DoubleTap : Perk
     {
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/DoubleTapLogo").Value;
         public override void ApplyEffect(PlayerPerks perkPlayer)
@@ -20,7 +20,7 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class ElectricCherryPerk : Perk
+    public class ElectricCherry : Perk
     {
         //speed boost after reload
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/ElectricCherryLogo").Value;
@@ -30,17 +30,21 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class JuggernogPerk : Perk
+    public class Juggernog : Perk
     {
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/JuggernogLogo").Value;
         public override void ApplyEffect(PlayerPerks perkPlayer)
         {
             if(tier>=1)perkPlayer.Player.endurance+=0.15f;
-            if(tier>=2)perkPlayer.Player.moveSpeed+=5f;
+            if (tier >= 2)
+            {
+                perkPlayer.Player.moveSpeed+=5f;
+            }
+            
         }
     }
 
-    public class MuleKickPerk : Perk
+    public class MuleKick : Perk
     {
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/MuleKickLogo").Value;
         public override void ApplyEffect(PlayerPerks perkPlayer)
@@ -49,7 +53,7 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class QuickRevivePerk : Perk
+    public class QuickRevive : Perk
     {  
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/QuickReviveLogo").Value;
         
@@ -60,7 +64,7 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class SpeedColaPerk : Perk
+    public class SpeedCola : Perk
     {
         public override Texture2D perkLogo =>ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/SpeedColaLogo").Value;
 
@@ -70,7 +74,7 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class StaminUpPerk : Perk
+    public class StaminUp : Perk
     {
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/StaminUpLogo").Value;
 
@@ -80,7 +84,7 @@ namespace BoneTest.Content.Players
         }
     }
 
-    public class WidowsWinePerk : Perk
+    public class WidowsWine : Perk
     {
  
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BoneTest/Content/Players/PerksLogo/ElectricCherryLogo").Value;

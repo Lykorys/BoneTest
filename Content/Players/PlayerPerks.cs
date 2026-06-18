@@ -47,6 +47,10 @@ namespace BoneTest.Content.Players
         }
         
         public void RemovePerk(string perk) => ActivePerks.Remove(perk);
+        public override void ResetEffects()
+        {
+            magSizeMult = 1f;
+        }
 
         public override void PostUpdateEquips()
         {
@@ -125,14 +129,14 @@ namespace BoneTest.Content.Players
         }
         private Perk CreatePerkFromName(string name) => name switch
         {
-            "DoubleTap" => new DoubleTapPerk(),
-            "ElectricCherry" => new ElectricCherryPerk(),
-            "Juggernog" => new JuggernogPerk(),
-            "MuleKick" => new MuleKickPerk(),
-            "QuickRevive" => new QuickRevivePerk(),
-            "SpeedCola" => new SpeedColaPerk(),
-            "StaminUp" => new StaminUpPerk(),
-            "WidowsWine" => new WidowsWinePerk(),
+            "DoubleTap" => new DoubleTap(),
+            "ElectricCherry" => new ElectricCherry(),
+            "Juggernog" => new Juggernog(),
+            "MuleKick" => new MuleKick(),
+            "QuickRevive" => new QuickRevive(),
+            "SpeedCola" => new SpeedCola(),
+            "StaminUp" => new StaminUp(),
+            "WidowsWine" => new WidowsWine(),
             _ => null
         };
 

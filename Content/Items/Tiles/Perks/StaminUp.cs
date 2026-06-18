@@ -13,7 +13,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
 {
     public class StaminUpTile : PerkMachine
     {
-        public override Perk perk => new StaminUpPerk();
+        public override Perk perk => new StaminUp();
         public override int[] prices => [500, 1500, 3000, 4500];
         public override string Texture => "Terraria/Images/Tiles_26"; 
         public override void SetStaticDefaults() {
@@ -44,7 +44,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
             return Place(i, j);
         }
     }
-    public class StaminUp : ModItem 
+    public class StaminUpItem : ModItem 
     {
         public override string Texture => "Terraria/Images/Tiles_26";
         public override void SetDefaults() {

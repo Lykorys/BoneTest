@@ -14,7 +14,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
 {
     public class QuickReviveTile : PerkMachine
     {
-        public override Perk perk => new QuickRevivePerk();
+        public override Perk perk => new QuickRevive();
         public override int[] prices => [500, 1500, 3000, 4500];
         public override string Texture => "Terraria/Images/Tiles_26"; 
         public override void SetStaticDefaults() {
@@ -46,7 +46,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
             return Place(i, j);
         }
     }
-    public class QuickRevive : ModItem 
+    public class QuickReviveItem : ModItem 
     {
         public override string Texture => "Terraria/Images/Tiles_26";
         public override void SetDefaults() {

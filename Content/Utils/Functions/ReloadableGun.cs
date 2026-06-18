@@ -14,7 +14,7 @@ namespace BoneTest.Content.Utils.Functions
 {
     public class ReloadableGun : GlobalItem
     {
-        //Todo patch pouch getting deleted
+        
         private PlayerPerks playerPerks;
         private int chargeTimer = 0;
         public int reloadTime;
@@ -53,15 +53,9 @@ namespace BoneTest.Content.Utils.Functions
         }
         public override void HoldItem(Item item, Player player)
         {
-
+            playerPerks = player.GetModPlayer<PlayerPerks>();
+            if(maxAmmo==maxDefaultAmmo && playerPerks.HasPerk("MuleKick")) maxAmmo=(int)(maxAmmo*playerPerks.magSizeMult);
             if (KeybindSystem.Reload.JustPressed) {
-                playerPerks ??= player.GetModPlayer<PlayerPerks>();
-                if(maxAmmo==maxDefaultAmmo && playerPerks.HasPerk("MuleKick"))
-                {
-                    maxAmmo= (int)(maxAmmo*playerPerks.magSizeMult);//TODO reparer ce merdier
-                    Main.NewText(maxAmmo);
-                }
-                
                 if (!isReloading && ammo <maxAmmo) {
                     reload(player); 
                 }

@@ -162,6 +162,26 @@ Items: {
 		DisplayName: Perk A Holic
 		Tooltip: ""
 	}
+
+	MuleKickItem: {
+		DisplayName: Mule Kick Item
+		Tooltip: ""
+	}
+
+	QuickReviveItem: {
+		DisplayName: Quick Revive Item
+		Tooltip: ""
+	}
+
+	SpeedColaItem: {
+		DisplayName: Speed Cola Item
+		Tooltip: ""
+	}
+
+	StaminUpItem: {
+		DisplayName: Stamin Up Item
+		Tooltip: ""
+	}
 }
 
 NPCs: {
