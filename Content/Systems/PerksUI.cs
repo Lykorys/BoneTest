@@ -5,6 +5,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using BoneTest.Content.Players;
 using Terraria.DataStructures;
+using System.Linq;
 
 namespace BoneTest.Content.Systems
 {
@@ -17,9 +18,17 @@ namespace BoneTest.Content.Systems
         private int offsetBottom = 150;
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
-            PlayerPerks perks = Main.LocalPlayer.GetModPlayer<PlayerPerks>();
-            if(perks.hasJug) drawPerks(ModContent.Request<Texture2D>("BoneTest/Content/Items/Tiles/Perks/Jug64").Value,spriteBatch);
             
+            PlayerPerks perks = Main.LocalPlayer.GetModPlayer<PlayerPerks>();
+            numberOfPerks=0;
+            foreach (var perk in perks.ActivePerks.Values)
+            {
+                if(perk.perkLogo != null)
+                {
+                    drawPerks(perk.perkLogo, spriteBatch);
+                    numberOfPerks++;
+                }
+            }
         }
         public void drawPerks( Texture2D img, SpriteBatch spriteBatch)
         {
@@ -29,7 +38,7 @@ namespace BoneTest.Content.Systems
                 offsetBottom+=150;
             } 
             
-            Vector2 position = new Vector2(offsetLeft+numberOfPerks*150,Main.screenHeight-offsetBottom);
+            Vector2 position = new Vector2(offsetLeft+numberOfPerks*32,Main.screenHeight-offsetBottom);
 
             spriteBatch.Draw(img, position, null, Color.White, 0f, img.Size() / 2f, 1f, SpriteEffects.None, 0f);
 

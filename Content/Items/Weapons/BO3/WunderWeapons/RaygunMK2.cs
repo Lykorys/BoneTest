@@ -25,9 +25,9 @@ namespace BoneTest.Content.Items.Weapons.BO3.WunderWeapons
 
         private WunderWeapon Gun => Item.GetGlobalItem<WunderWeapon>();
         public override void SetDefaults(){
-            Item.width = 80;
-            Item.height = 67;
-            Item.scale = 1f;
+            Item.width = 60;
+            Item.height = 40;
+            Item.scale = 2f;
 			Item.rare = ItemRarityID.Green; // The color that the item's name will be in-game.
 			Item.useTime = 4; // The item's use time in ticks (60 ticks == 1 second.)
 			Item.useAnimation = 12; // The length of the item's use animation in ticks (60 ticks == 1 second.)

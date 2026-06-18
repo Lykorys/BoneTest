@@ -14,6 +14,7 @@ namespace BoneTest.Content.Utils.Functions
 {
     public class ReloadableGun : GlobalItem
     {
+        //Todo patch pouch getting deleted
         private PlayerPerks playerPerks;
         private int chargeTimer = 0;
         public int reloadTime;
@@ -55,7 +56,12 @@ namespace BoneTest.Content.Utils.Functions
 
             if (KeybindSystem.Reload.JustPressed) {
                 playerPerks ??= player.GetModPlayer<PlayerPerks>();
-                if(maxAmmo==maxDefaultAmmo && playerPerks.hasMuleKick) maxAmmo= (int)(maxAmmo*playerPerks.magSizeMult);
+                if(maxAmmo==maxDefaultAmmo && playerPerks.HasPerk("MuleKick"))
+                {
+                    maxAmmo= (int)(maxAmmo*playerPerks.magSizeMult);//TODO reparer ce merdier
+                    Main.NewText(maxAmmo);
+                }
+                
                 if (!isReloading && ammo <maxAmmo) {
                     reload(player); 
                 }
@@ -127,7 +133,6 @@ namespace BoneTest.Content.Utils.Functions
             Item bullet = player.inventory[slot];
             while (ammoToRemove != 0 && slot!=-1) 
             {
-                
                 if (bullet.stack == 0)
                 {
                     bullet.TurnToAir();
@@ -139,7 +144,7 @@ namespace BoneTest.Content.Utils.Functions
                     ammoToRemove-=1;
                     ammo++;
                     loadedBullets.Insert(0,bullet.shoot);
-                    bullet.stack-=1;
+                    if(bullet.consumable) bullet.stack-=1;
                 }
             }
         }

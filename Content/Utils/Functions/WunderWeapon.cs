@@ -11,7 +11,7 @@ using BoneTest.Content.Config;
 using BoneTest.Content.Players;
 using Humanizer;
 namespace BoneTest.Content.Utils.Functions
-{
+{//todo fix you can reload with no bullet and reload exced max ammo
     public class WunderWeapon : GlobalItem
     {
         private PlayerPerks playerPerks;
@@ -55,7 +55,7 @@ namespace BoneTest.Content.Utils.Functions
 
             if (KeybindSystem.Reload.JustPressed) {
                 playerPerks ??= player.GetModPlayer<PlayerPerks>();
-                if(magCapacity==maxDefaultAmmo && playerPerks.hasMuleKick) magCapacity= (int)(magCapacity*playerPerks.magSizeMult);
+                if(magCapacity==maxDefaultAmmo && playerPerks.HasPerk("MuleKick")) magCapacity= (int)(magCapacity*playerPerks.magSizeMult);
                 if (!isReloading && ammo <magCapacity) {
                     reload(); 
                 }

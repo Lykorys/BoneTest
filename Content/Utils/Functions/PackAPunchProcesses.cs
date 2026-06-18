@@ -15,11 +15,7 @@ namespace BoneTest.Content.Utils.Functions
             public int Output;
             
         }
-
-        // 1. Declare the list as static, but don't initialize it yet
         public static List<PunchProcess> PunchUpgrades;
-
-        // 2. Use a static constructor to initialize it
         static PackAPunchProcesses() 
         {
             PunchUpgrades = new List<PunchProcess>()

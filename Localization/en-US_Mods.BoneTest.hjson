@@ -147,6 +147,21 @@ Items: {
 		Tooltip: ""
 		DisplayName: Raygun M K2
 	}
+
+	StaminUp: {
+		DisplayName: Stamin Up
+		Tooltip: ""
+	}
+
+	SelfKiller: {
+		DisplayName: Self Killer
+		Tooltip: ""
+	}
+
+	PerkAHolic: {
+		DisplayName: Perk A Holic
+		Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -241,3 +256,10 @@ Configs: {
 }
 
 Keybinds.Reload.DisplayName: Reload
+
+Buffs: {
+	ElectricCherryBuff: {
+		DisplayName: Electric Cherry Buff
+		Description: Mods.BoneTest.Buffs.ElectricCherryBuff.Description
+	}
+}
