@@ -6,11 +6,15 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
 using BoneTest.Content.Players;
+using BoneTest.Content.Utils.Functions;
+using BoneTest.Content.Items.Tiles.Perks;
 
 namespace BoneTest.Content.Items.Tiles.Perks
 {
-    public class DoubleTapTile : ModTile
+    public class DoubleTapTile : PerkMachine
     {
+        public override Perk perk => new DoubleTapPerk();
+        public override int[] prices => [500, 1500, 3000, 4500];
         public override string Texture => "Terraria/Images/Tiles_26"; 
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
@@ -23,21 +27,6 @@ namespace BoneTest.Content.Items.Tiles.Perks
             AdjTiles = new int[] { TileID.Hellforge };
         }
 
-        public override bool RightClick(int i, int j) {
-            Tile tile = Main.tile[i, j];
-            int left = i - (tile.TileFrameX / 18);
-            int top = j - (tile.TileFrameY / 18);
-            Player player = Main.LocalPlayer;
-            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (!modPlayer.hasDouble) {
-                modPlayer.hasDouble = true;
-                Main.NewText("DoubleTap");
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-            } else {
-                Main.NewText("already");
-            }
-            return true;
-        }
     }
     public class DoubleTapEntity : ModTileEntity
     {

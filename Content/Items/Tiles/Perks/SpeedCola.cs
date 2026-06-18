@@ -6,40 +6,36 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using BoneTest.Content.Players;
+using BoneTest.Content.Utils.Functions;
 
 namespace BoneTest.Content.Items.Tiles.Perks
 {
-    public class SpeedColaTile : ModTile
+    public class SpeedColaTile : PerkMachine
     {
-        public override string Texture => "Terraria/Images/Tiles_26"; 
+        public override Perk perk => new ElectricCherryPerk();
+        public override int[] prices => [500, 1500, 3000, 4500];
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+            
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.Width = 3;
+            TileObjectData.newTile.Height = 4;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
+
             AddMapEntry(new Color(150, 50, 255)); 
             AdjTiles = new int[] { TileID.Hellforge };
         }
-
-        public override bool RightClick(int i, int j) {
-            Tile tile = Main.tile[i, j];
-            int left = i - (tile.TileFrameX / 18);
-            int top = j - (tile.TileFrameY / 18);
-            Player player = Main.LocalPlayer;
-            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (!modPlayer.hasSpeed) {
-                modPlayer.hasSpeed = true;
-                Main.NewText("HasMule");
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-            } else {
-                Main.NewText("already");
-            }
-            return true;
-        }
     }
+
     public class SpeedColaEntity : ModTileEntity
     {
         public override bool IsTileValidForEntity(int x, int y) {
@@ -49,21 +45,26 @@ namespace BoneTest.Content.Items.Tiles.Perks
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 2);
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 4);
                 NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
                 return -1;
             }
             return Place(i, j);
         }
     }
+
     public class SpeedCola : ModItem 
     {
-        public override string Texture => "Terraria/Images/Tiles_26";
+        public override string Texture => "Terraria/Images/Tiles_26"; // temporary texture reference
+
         public override void SetDefaults() {
-            Item.DefaultToPlaceableTile(ModContent.TileType<SpeedColaTile>(), 1);
+            Item.DefaultToPlaceableTile(ModContent.TileType<SpeedColaTile>()); // Cleans up and configures modern placement mechanics!
             Item.width = 28;
             Item.height = 14;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Blue;
         }
+
         public override void AddRecipes() {
             CreateRecipe()
                 .AddIngredient(ItemID.CrimtaneBar, 10)
@@ -71,6 +72,7 @@ namespace BoneTest.Content.Items.Tiles.Perks
                 .AddTile(TileID.Anvils)
                 .Register();
         }
+
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             Rectangle sourceRect = new Rectangle(54, 0, 54, 34); 
             Texture2D texture = TextureAssets.Item[Type].Value;

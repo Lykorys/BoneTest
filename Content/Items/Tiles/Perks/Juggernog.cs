@@ -6,11 +6,14 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
 using BoneTest.Content.Players;
+using BoneTest.Content.Utils.Functions;
 
 namespace BoneTest.Content.Items.Tiles.Perks
 {
-    public class JuggernogTile : ModTile
+    public class JuggernogTile : PerkMachine
     {
+        public override Perk perk => new JuggernogPerk();
+        public override int[] prices => [500, 1500, 3000, 4500];
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -26,21 +29,6 @@ namespace BoneTest.Content.Items.Tiles.Perks
         }
 
 
-        public override bool RightClick(int i, int j) {
-            Tile tile = Main.tile[i, j];
-            int left = i - (tile.TileFrameX / 18);
-            int top = j - (tile.TileFrameY / 18);
-            Player player = Main.LocalPlayer;
-            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (!modPlayer.hasJug) {
-                modPlayer.hasJug = true;
-                Main.NewText("JugActive");
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-            } else {
-                Main.NewText("already");
-            }
-            return true;
-        }
     }
     public class JuggernogEntity : ModTileEntity
     {
@@ -51,7 +39,6 @@ namespace BoneTest.Content.Items.Tiles.Perks
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
-                // Change the size parameter to 4 so it covers the whole 2x4 structure
                 NetMessage.SendTileSquare(Main.myPlayer, i, j, 4);
                 NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
                 return -1;
@@ -85,4 +72,5 @@ namespace BoneTest.Content.Items.Tiles.Perks
             return false;
         }
     }
+
 }

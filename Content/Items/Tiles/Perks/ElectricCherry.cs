@@ -7,12 +7,15 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
 using BoneTest.Content.Players;
+using BoneTest.Content.Utils.Functions;
 
 namespace BoneTest.Content.Items.Tiles.Perks
 {
-    public class ElectricCherryTile : ModTile
+    public class ElectricCherryTile : PerkMachine
     {
         public override string Texture => "Terraria/Images/Tiles_26"; 
+        public override Perk perk => new ElectricCherryPerk();
+        public override int[] prices => [500, 1500, 3000, 4500];
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -21,24 +24,10 @@ namespace BoneTest.Content.Items.Tiles.Perks
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(150, 50, 255)); 
-            AdjTiles = new int[] { TileID.Hellforge };
+            AdjTiles = [TileID.Hellforge];
         }
 
-        public override bool RightClick(int i, int j) {
-            Tile tile = Main.tile[i, j];
-            int left = i - (tile.TileFrameX / 18);
-            int top = j - (tile.TileFrameY / 18);
-            Player player = Main.LocalPlayer;
-            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (!modPlayer.hasCherry) {
-                modPlayer.hasCherry = true;
-                Main.NewText("CherryActive");
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-            } else {
-                Main.NewText("already");
-            }
-            return true;
-        }
+
     }
     public class ElectricCherryEntity : ModTileEntity
     {

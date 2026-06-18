@@ -7,11 +7,14 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent;
 using BoneTest.Content.Players;
+using BoneTest.Content.Utils.Functions;
 
 namespace BoneTest.Content.Items.Tiles.Perks
 {
-    public class StaminaUpTile : ModTile
+    public class StaminUpTile : PerkMachine
     {
+        public override Perk perk => new StaminUpPerk();
+        public override int[] prices => [500, 1500, 3000, 4500];
         public override string Texture => "Terraria/Images/Tiles_26"; 
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
@@ -24,27 +27,12 @@ namespace BoneTest.Content.Items.Tiles.Perks
             AdjTiles = new int[] { TileID.Hellforge };
         }
 
-        public override bool RightClick(int i, int j) {
-            Tile tile = Main.tile[i, j];
-            int left = i - (tile.TileFrameX / 18);
-            int top = j - (tile.TileFrameY / 18);
-            Player player = Main.LocalPlayer;
-            PlayerPerks modPlayer = player.GetModPlayer<PlayerPerks>();
-            if (!modPlayer.hasStaminaUp) {
-                modPlayer.hasStaminaUp = true;
-                Main.NewText("HasMule");
-                Terraria.Audio.SoundEngine.PlaySound(SoundID.Item3, player.position);
-            } else {
-                Main.NewText("already");
-            }
-            return true;
-        }
     }
-    public class StaminaUpEntity : ModTileEntity
+    public class StaminUpEntity : ModTileEntity
     {
         public override bool IsTileValidForEntity(int x, int y) {
             Tile tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<StaminaUpTile>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<StaminUpTile>();
         }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
@@ -56,11 +44,11 @@ namespace BoneTest.Content.Items.Tiles.Perks
             return Place(i, j);
         }
     }
-    public class StaminaUp : ModItem 
+    public class StaminUp : ModItem 
     {
         public override string Texture => "Terraria/Images/Tiles_26";
         public override void SetDefaults() {
-            Item.DefaultToPlaceableTile(ModContent.TileType<StaminaUpTile>(), 1);
+            Item.DefaultToPlaceableTile(ModContent.TileType<StaminUpTile>(), 1);
             Item.width = 28;
             Item.height = 14;
         }
