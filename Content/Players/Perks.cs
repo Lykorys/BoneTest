@@ -8,6 +8,7 @@ namespace BlackOps3.Content.Players
         
         public string perkName => GetType().Name;
         public int tier = 1;
+        public int maxTier = 5;
         public abstract Texture2D perkLogo {get;}
         public abstract void ApplyEffect(PlayerPerks playerPerks);
     }

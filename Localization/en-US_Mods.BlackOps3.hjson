@@ -182,6 +182,11 @@ Items: {
 		DisplayName: Stamin Up Item
 		Tooltip: ""
 	}
+
+	UpAPerk: {
+		Tooltip: ""
+		DisplayName: Up A Perk
+	}
 }
 
 NPCs: {

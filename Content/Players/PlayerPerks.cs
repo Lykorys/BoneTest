@@ -10,7 +10,8 @@ using Terraria.DataStructures;
 namespace BlackOps3.Content.Players
 {
     
-    
+    //TODO save perk limit after dc
+    //TODO fix perk buying removing money when at perk limit
     public class PlayerPerks : ModPlayer
     {
         public int zombieMoney = 10000;
@@ -21,9 +22,11 @@ namespace BlackOps3.Content.Players
         public bool HasPerk(string perk) => ActivePerks.ContainsKey(perk);
         public void AddPerk(Perk perk) 
         {
-            //if(ActivePerks.Count<4) Todo remettre apres
-                if (!ActivePerks.ContainsKey(perk.perkName))
+            if(ActivePerks.Count<maxPerks)
+                if (!ActivePerks.TryGetValue(perk.perkName, out Perk value))
                     ActivePerks.Add(perk.perkName, perk);
+                else 
+                    if(value.tier < value.maxTier) value.tier++;
         }
 
         public void ClearPerks() => ActivePerks = new();
