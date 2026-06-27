@@ -4,10 +4,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using BlackOps3.Content.Utils.Functions;
-using BlackOps3.Content.Config;
-using System; 
-using System.Collections.Generic;
+using BlackOps3.Content.Systems;
 
 namespace BlackOps3.Content.Items.Weapons.BO3.WunderWeapons
 {

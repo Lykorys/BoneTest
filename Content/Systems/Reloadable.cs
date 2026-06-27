@@ -10,53 +10,39 @@ using Terraria.ModLoader.IO;
 using BlackOps3.Content.Config;
 using BlackOps3.Content.Players;
 using Humanizer;
-namespace BlackOps3.Content.Utils.Functions
+namespace BlackOps3.Content.Systems
 {
-    public class ReloadableGuDn : GlobalItem
+    public abstract class Reloadable : GlobalItem
     {
         
-        private PlayerPerks playerPerks;
-        private int chargeTimer = 0;
+        public PlayerPerks playerPerks;
+        public int chargeTimer = 0;
         public int reloadTime;
         public int ammo = 0;
-        public int maxAmmo;
-        private int maxDefaultAmmo;
+        public int magCapacity;
+        public int maxDefaultAmmo;
         public bool isReloading = false;
-        public List<int> loadedBullets = new List<int>();
         public override bool InstancePerEntity => true;
         public bool IsReloadable = false;
         public SoundStyle? reloadSound;
         public SoundStyle shootSound;
-        private bool hasPlayedReloadSound = false;
+        public bool hasPlayedReloadSound = false; 
         //Use it if your sound is a burst and not a single shot if single shot value= 1 and values should never be negative
         public int whenToPlaySound=1;
-        private int shootSoundNumber;
+        public int shootSoundNumber;
+        public abstract bool canReload(Player player);
         public override void SetDefaults(Item entity)
         {
             shootSoundNumber=whenToPlaySound;
-            maxDefaultAmmo=maxAmmo;
-        }
-        public override void SaveData(Item item, TagCompound tag) {
-            if (IsReloadable) {
-                tag["ammo"] = ammo;
-                tag["bullets"] = loadedBullets;
-            }
+            maxDefaultAmmo=magCapacity;
         }
 
-        public override void LoadData(Item item, TagCompound tag) {
-            if (tag.ContainsKey("ammo")) {
-                ammo = tag.GetInt("ammo");
-            }
-            if (tag.ContainsKey("bullets")) {
-                loadedBullets = (List<int>)tag.GetList<int>("bullets");
-            }
-        }
         public override void HoldItem(Item item, Player player)
         {
             playerPerks = player.GetModPlayer<PlayerPerks>();
-            if(maxAmmo==maxDefaultAmmo && playerPerks.HasPerk("MuleKick")) maxAmmo=(int)(maxAmmo*playerPerks.magSizeMult);
+            if(magCapacity==maxDefaultAmmo && playerPerks.HasPerk("MuleKick")) magCapacity=(int)(magCapacity*playerPerks.magSizeMult);
             if (KeybindSystem.Reload.JustPressed) {
-                if (!isReloading && ammo <maxAmmo) {
+                if (canReload(player)) {
                     reload(player); 
                 }
             }
@@ -99,11 +85,6 @@ namespace BlackOps3.Content.Utils.Functions
 
             return true;
         }
-        public void removeBullets()
-        {
-            loadedBullets.RemoveAt(0);
-            ammo--;
-        }
         public void playSound()
         {
             if(shootSoundNumber==whenToPlaySound)
@@ -117,44 +98,25 @@ namespace BlackOps3.Content.Utils.Functions
             }
             
         }
-        public void reload(Player player)
+        public abstract void reload(Player player);
+        public int GetTotalReserve(Player player)
         {
-            if (!IsReloadable) return;
-            isReloading=true;
-            int ammoToRemove = maxAmmo-ammo;
-            shootSoundNumber=whenToPlaySound;
-            int slot = AmmoFinderSystem.GetFirstBulletSlot(player);
-            Item bullet = player.inventory[slot];
-            while (ammoToRemove != 0 && slot!=-1) 
-            {
-                if (bullet.stack == 0)
-                {
-                    bullet.TurnToAir();
-                    slot = AmmoFinderSystem.GetFirstBulletSlot(player);
-                    bullet = player.inventory[slot];
-                }
-                else
-                {
-                    ammoToRemove-=1;
-                    ammo++;
-                    loadedBullets.Insert(0,bullet.shoot);
-                    if(bullet.consumable) bullet.stack-=1;
-                }
-            }
-        }
-        public override void PostDrawInInventory(Item item,SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if (!IsReloadable) return;
-            Player player = Main.LocalPlayer;
             int totalReserves = 0;
             foreach (Item invItem in player.inventory) {
                 if (!invItem.IsAir && invItem.ammo == AmmoID.Bullet) {
                     totalReserves += invItem.stack;
                 }
             }
+            return totalReserves;
+        }
+        public override void PostDrawInInventory(Item item,SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+            if (!IsReloadable) return;
+            Player player = Main.LocalPlayer;
+            int totalReserves = GetTotalReserve(player);
             string magText = $"{ammo}";
             string reserveText = $"{totalReserves}";
             float textScale = scale * 1.1f; 
-            float ratio = (float)ammo / maxAmmo;
+            float ratio = (float)ammo / magCapacity;
             Color magColor = Color.Lerp(new Color(150, 0, 0), Color.White, ratio);
             float slotWidth = 52f * scale;
             Vector2 slotTopLeft = position - (new Vector2(26f, 26f) * scale);

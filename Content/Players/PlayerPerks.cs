@@ -11,13 +11,13 @@ namespace BlackOps3.Content.Players
 {
     
     //TODO save perk limit after dc
-    //TODO fix perk buying removing money when at perk limit
     public class PlayerPerks : ModPlayer
     {
         public int zombieMoney = 10000;
         public bool isReloading = false;
+        public float reloadSpeed = 1f;
         public float magSizeMult= 1f;
-        public float maxPerks= 4;
+        public int maxPerks= 4;
         public Dictionary<string, Perk> ActivePerks { get; private set; } = new();
         public bool HasPerk(string perk) => ActivePerks.ContainsKey(perk);
         public void AddPerk(Perk perk) 
@@ -34,7 +34,8 @@ namespace BlackOps3.Content.Players
         {
             var perkTypes = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => type.IsSubclassOf(typeof(Perk)) && !type.IsAbstract);
-
+            int oldMax = maxPerks;
+            maxPerks= perkTypes.Count();
             foreach (Type type in perkTypes)
             {
                 if (Activator.CreateInstance(type) is Perk perkInstance)
@@ -43,10 +44,11 @@ namespace BlackOps3.Content.Players
                     {
                         AddPerk(perkInstance);
                     }
+                    ActivePerks[perkInstance.perkName].tier=perkInstance.maxTier;
                 }
             }
-
-            Main.NewText("Perkaholic Activated! All perks granted.", Microsoft.Xna.Framework.Color.Cyan);
+            maxPerks=oldMax;
+            Main.NewText("Perkaholic Activated! All perks granted.",Color.Cyan);
         }
         
         public void RemovePerk(string perk) => ActivePerks.Remove(perk);

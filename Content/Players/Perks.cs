@@ -24,7 +24,12 @@ namespace BlackOps3.Content.Players
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BlackOps3/Content/Players/PerksLogo/DoubleTapLogo").Value;
         public override void ApplyEffect(PlayerPerks perkPlayer)
         {
-            perkPlayer.Player.GetAttackSpeed(DamageClass.Generic) += 0.3f;
+            if(tier>=1)perkPlayer.Player.GetAttackSpeed(DamageClass.Generic) += 0.3f;
+            if(tier>=2)perkPlayer.Player.GetDamage(DamageClass.Generic) += 0.1f;
+            if(tier>=3)perkPlayer.Player.GetCritChance(DamageClass.Generic) += 0.1f;
+            if(tier>=4)perkPlayer.Player.GetArmorPenetration(DamageClass.Generic) += 10;
+            if(tier>=5);
+            
         }
     }
 
@@ -39,8 +44,15 @@ namespace BlackOps3.Content.Players
         */
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BlackOps3/Content/Players/PerksLogo/ElectricCherryLogo").Value;
         public override void ApplyEffect(PlayerPerks perkPlayer)
-        {   
-            
+        {
+            if (tier >= 2) if (perkPlayer.isReloading)
+            {
+                perkPlayer.Player.AddBuff(ModContent.BuffType<ElectricCherryBuff>(),5);
+                Main.NewText("boost");
+            } 
+            if(tier>=3);
+            if(tier>=4);
+            if(tier>=5);
         }
     }
 
@@ -122,7 +134,7 @@ namespace BlackOps3.Content.Players
 
         public override void ApplyEffect(PlayerPerks perkPlayer)
         {
-            if(tier>=1)perkPlayer.Player.moveSpeed+=0.15f;
+            if(tier>=1)perkPlayer.reloadSpeed+=0.15f;
             if(tier>=2)perkPlayer.Player.runAcceleration+=0.10f;
             if(tier>=3);
             if(tier>=4);
@@ -154,11 +166,23 @@ namespace BlackOps3.Content.Players
 
     public class WidowsWine : Perk
     {
- 
+        /*
+        Tier 1 : x% de chance de spawn une araignée qui ralenti et empoisonné les ennemies (4 ou 5 max et faut que ça soit comme les araignée du spider staff)
+        Tier 2 : +1 max spawn et +x% de taux de spawn
+        Tier 3 : donne l'abilité de s'attacher au mur et ameliore la vitesse de rétractation du grapin 
+        Tier 4 : +2 max spawn 
+        Tier 5 : ameliore l'effet de poison et de ralentissement. Si vous utilisez une armure summon gagnez +0.2hp/s pour chaque araignée vivante 
+        */
+
         public override Texture2D perkLogo => ModContent.Request<Texture2D>("BlackOps3/Content/Players/PerksLogo/ElectricCherryLogo").Value;
         
         public override void ApplyEffect(PlayerPerks perkPlayer)
         {
+            if(tier>=1);
+            if(tier>=2);
+            if(tier>=3);
+            if(tier>=4);
+            if(tier>=5);
         }
     }
 }

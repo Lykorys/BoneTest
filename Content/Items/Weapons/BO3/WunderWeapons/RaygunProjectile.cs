@@ -2,9 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using BlackOps3.Content.Items.Tiles.Perks;
 namespace BlackOps3.Content.Items.Weapons.BO3.WunderWeapons
 {

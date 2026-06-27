@@ -7,11 +7,7 @@ namespace BlackOps3.Content.Players
 	public class ElectricCherryBuff : ModBuff
 	{
         public override string Texture => "Terraria/Images/Buff_116";
-        public float speedModifier;
-		public ElectricCherryBuff(float speed)
-		{
-			speedModifier=speed;
-		}
+        public float speedModifier = 0.25f;
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 		}

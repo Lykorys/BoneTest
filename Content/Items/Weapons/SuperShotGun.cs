@@ -3,10 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using BlackOps3.Content.Utils.Functions;
 using Terraria.DataStructures;
-using BlackOps3.Content.Config;
-using System;
+using BlackOps3.Content.Systems;
 
 namespace BlackOps3.Content.Items.Weapons
 {
@@ -49,7 +47,7 @@ namespace BlackOps3.Content.Items.Weapons
 			Item.useAmmo = AmmoID.None; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
             if (Item.TryGetGlobalItem(out ReloadableGun gun)) {
                 gun.IsReloadable=true;
-                gun.maxAmmo = 2;
+                gun.magCapacity = 2;
                 gun.reloadTime = (int)(60 *  1.77);
                 gun.reloadSound = SoundID.GuitarAm;
                 gun.shootSound= shootSound;
