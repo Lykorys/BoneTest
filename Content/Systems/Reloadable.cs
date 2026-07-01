@@ -16,6 +16,8 @@ namespace BlackOps3.Content.Systems
         public static ModConfig config = ModContent.GetInstance<ModConfig>();
         public PlayerPerks playerPerks;
         public int chargeTimer = 0;
+        public int PackaPunchedTier = 0;
+        public int maxPaP = 1;
         public int reloadTime;
         public int ammo = 0;
         public int magCapacity;
@@ -124,6 +126,9 @@ namespace BlackOps3.Content.Systems
                 Vector2.Zero, 
                 new Vector2(textScale)
             );
+        }
+        public void UpgradePap(){
+            if(PackaPunchedTier<maxPaP) PackaPunchedTier++;
         }
     }
 }

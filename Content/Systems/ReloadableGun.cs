@@ -13,6 +13,7 @@ namespace BlackOps3.Content.Systems
 {
     public abstract class ReloadableGun : Reloadable
     {
+        
         public List<int> loadedBullets = new List<int>();
         public override void SetDefaults() => shootSoundNumber = whenToPlaySound; 
 
@@ -47,7 +48,6 @@ namespace BlackOps3.Content.Systems
             }
         }
         public override bool canReload(Player player) => !playerPerks.isReloading && GetTotalReserve(player)>0 && ammo < magCapacity;
-        
         
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             Player player = Main.LocalPlayer;

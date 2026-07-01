@@ -12,7 +12,7 @@ using BlackOps3.Content.Players;
 using Humanizer;
 namespace BlackOps3.Content.Systems
 {
-    public abstract class WunderWeapon : Reloadable
+    public abstract class WunderWeapon : Reloadable //TODO make part from progression for each weapons
     {
         public int ammoReserve;
         

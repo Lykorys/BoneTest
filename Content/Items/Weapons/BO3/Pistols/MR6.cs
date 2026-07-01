@@ -22,8 +22,6 @@ namespace BlackOps3.Content.Items.Weapons.BO3.Pistols
             Item.shoot = ProjectileID.Bullet;
             Item.shootSpeed = 20f;
             Item.useAmmo = AmmoID.None;
-
-            
             magCapacity = 8;
             reloadTime = (int)(60 * 1.9);
             shootSound = new SoundStyle("BlackOps3/Content/Sound/Weapons/MR6shoot")
