@@ -99,6 +99,11 @@ namespace BlackOps3.Content.Systems
             else SoundEngine.PlaySound(SoundID.MenuTick, player.position);
             return false;
         }
+        public void LoadBullets()
+        {
+            for(int _ =0;_<magCapacity;_++) loadedBullets.Add(ProjectileID.Bullet);
+            ammo=magCapacity;
+        }
         public override void SaveData(TagCompound tag) {
 
             tag["ammo"] = ammo;

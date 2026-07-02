@@ -44,11 +44,6 @@ namespace BlackOps3.Content.Items.Weapons.BO3.WunderWeapons
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) 
 		{
-            Main.NewText(maxDefaultAmmo,Color.AliceBlue);
-            Main.NewText(playerPerks.magSizeMult);
-            Main.NewText(ammo);
-            Main.NewText(magCapacity);
-            Main.NewText(ammo);
             if (ammo > 0) {
                 Projectile.NewProjectile(source, position, velocity,ModContent.ProjectileType<RaygunProjectile>() , damage, knockback, player.whoAmI);
                 playSound();

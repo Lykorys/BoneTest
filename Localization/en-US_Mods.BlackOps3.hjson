@@ -192,6 +192,11 @@ Items: {
 		DisplayName: Moneygiver
 		Tooltip: ""
 	}
+
+	WidowsWineItem: {
+		Tooltip: ""
+		DisplayName: Widows Wine Item
+	}
 }
 
 NPCs: {

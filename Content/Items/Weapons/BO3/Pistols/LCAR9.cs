@@ -39,6 +39,7 @@ namespace BlackOps3.Content.Items.Weapons.BO3.Pistols
                 MaxInstances = 3
             };
             whenToPlaySound = Item.useAnimation / Item.useTime;
+            LoadBullets();
         }
         public override void SetStaticDefaults() {
             Terraria.Localization.Language.GetOrRegister("Mods.BlackOps3.Items.LCAR9.DisplayName", () => "L-CAR 9");

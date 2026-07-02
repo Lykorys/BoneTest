@@ -41,6 +41,7 @@ namespace BlackOps3.Content.Items.Weapons.BO3.Pistols
                 MaxInstances = 3
             };
             whenToPlaySound = Item.useAnimation / Item.useTime;
+            LoadBullets();
         }
        
         public override void AddRecipes(){

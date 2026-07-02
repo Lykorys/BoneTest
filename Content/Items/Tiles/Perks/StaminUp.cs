@@ -8,22 +8,26 @@ using Terraria.ObjectData;
 using Terraria.GameContent;
 using BlackOps3.Content.Players;
 using BlackOps3.Content.Systems;
+using Terraria.DataStructures;
+using Terraria.Enums;
 
 namespace BlackOps3.Content.Items.Tiles.Perks
 {
     public class StaminUpTile : PerkMachine
     {
         public override Perk perk => new StaminUp();
-        public override string Texture => "Terraria/Images/Tiles_26"; 
         public override void SetStaticDefaults() {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.Width = 3;
+            TileObjectData.newTile.Height = 5;
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 0;
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16,16};
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            AddMapEntry(new Color(150, 50, 255)); 
-            AdjTiles = new int[] { TileID.Hellforge };
         }
 
     }
@@ -47,7 +51,7 @@ namespace BlackOps3.Content.Items.Tiles.Perks
     {
         public override string Texture => "BlackOps3/Content/Players/PerksLogo/StaminUpLogo";
         public override void SetDefaults() {
-            Item.DefaultToPlaceableTile(ModContent.TileType<StaminUpTile>(), 1);
+            Item.DefaultToPlaceableTile(ModContent.TileType<StaminUpTile>());
             Item.width = 32;
             Item.height = 32;
         }

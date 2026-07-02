@@ -37,6 +37,7 @@ namespace BlackOps3.Content.Items.Weapons.BO3.Pistols
                 MaxInstances = 3
             };
             whenToPlaySound = Item.useAnimation / Item.useTime;
+            LoadBullets();
         }
         public override void SetStaticDefaults() {
             Terraria.Localization.Language.GetOrRegister("Mods.BlackOps3.Items.MR6.DisplayName", () => "MR6");
